@@ -39,6 +39,14 @@ class Whiteboard {
         this.whiteboardWebSocket.clear();
         this.whiteboardCanvas.clear();
     }
+
+    setColor(color: string) {
+        this.whiteboardInput.color = color;
+    }
+
+    setWidth(width: number) {
+        this.whiteboardInput.width = width;
+    }
 }
 
 export default Whiteboard;

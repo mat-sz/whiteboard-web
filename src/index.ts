@@ -12,3 +12,11 @@ const clearButton = document.getElementById('button-clear');
 clearButton.addEventListener('click', () => {
     whiteboard.clear();
 });
+
+const colorButtons = document.getElementsByClassName('button-color');
+for (let index in colorButtons) {
+    const button = colorButtons[index];
+    button.addEventListener('click', () => {
+        whiteboard.setColor(button.getAttribute('data-color'));
+    });
+}
