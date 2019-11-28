@@ -39,6 +39,16 @@ class Whiteboard {
     connected() {
         this.loadingDiv.style.display = 'none';
     }
+
+    clear() {
+        this.whiteboardWebSocket.clear();
+        this.whiteboardCanvas.clear();
+    }
 }
 
-new Whiteboard('canvas', 'loading', 'ws://localhost:5000/ws');
+let whiteboard = new Whiteboard('canvas', 'loading', 'ws://localhost:5000/ws');
+
+let clearButton = document.getElementById('button-clear');
+clearButton.addEventListener('click', () => {
+    whiteboard.clear();
+});

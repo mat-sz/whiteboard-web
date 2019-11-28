@@ -31,6 +31,18 @@ export default class WhiteboardWebSocket {
             }
         });
     }
+    
+    sendMessage(message: WhiteboardMessage) {
+        this.webSocket.send(JSON.stringify(message));
+    }
+
+    clear() {
+        const clearMessage: WhiteboardMessage = {
+            type: 'clear',
+        };
+
+        this.sendMessage(clearMessage);
+    }
 
     lineSegment(x1: number, y1: number, x2: number, y2: number) {
         const segmentMessage: WhiteboardMessageLineSegment = {
@@ -41,6 +53,6 @@ export default class WhiteboardWebSocket {
             y2: y2,
         };
 
-        this.webSocket.send(JSON.stringify(segmentMessage));
+        this.sendMessage(segmentMessage);
     }
 }
