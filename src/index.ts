@@ -1,54 +1,14 @@
 import './App.scss';
-import WhiteboardCanvas from './WhiteboardCanvas';
-import WhiteboardInput from './WhiteboardInput';
-import WhiteboardWebSocket from './WhiteboardWebSocket';
+import Whiteboard from './Whiteboard';
 
-class Whiteboard {
-    private whiteboardCanvas: WhiteboardCanvas = null;
-    private whiteboardWebSocket: WhiteboardWebSocket = null;
-    private whiteboardInput: WhiteboardInput = null;
+const canvas = document.getElementById('canvas') as HTMLCanvasElement;
+const loadingDiv = document.getElementById('loading');
 
-    private loadingDiv: HTMLElement = null;
+let whiteboard = new Whiteboard(canvas, 'ws://localhost:5000/ws', () => {
+    loadingDiv.style.display = 'none';
+});
 
-    constructor(canvasId: string, loadingId: string, url: string) {
-        const canvas = document.getElementById(canvasId) as HTMLCanvasElement;
-
-        this.loadingDiv = document.getElementById(loadingId);
-
-        this.whiteboardCanvas = new WhiteboardCanvas(canvas);
-        this.whiteboardWebSocket = new WhiteboardWebSocket(url, this.whiteboardCanvas);
-        this.whiteboardInput = new WhiteboardInput(this.whiteboardCanvas, this.whiteboardWebSocket);
-
-        this.whiteboardWebSocket.webSocket.addEventListener("open", () => {
-            this.connected();
-        });
-
-        this.whiteboardWebSocket.webSocket.addEventListener("error", () => {
-            //this.error();
-        });
-
-        this.whiteboardWebSocket.webSocket.addEventListener("close", () => {
-            //this.disconnected();
-        });
-
-        if (this.whiteboardWebSocket.webSocket.readyState == WebSocket.OPEN) {
-            this.connected();
-        }
-    }
-
-    connected() {
-        this.loadingDiv.style.display = 'none';
-    }
-
-    clear() {
-        this.whiteboardWebSocket.clear();
-        this.whiteboardCanvas.clear();
-    }
-}
-
-let whiteboard = new Whiteboard('canvas', 'loading', 'ws://localhost:5000/ws');
-
-let clearButton = document.getElementById('button-clear');
+const clearButton = document.getElementById('button-clear');
 clearButton.addEventListener('click', () => {
     whiteboard.clear();
 });
