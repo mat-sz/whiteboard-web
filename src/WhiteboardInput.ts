@@ -29,6 +29,7 @@ export default class WhiteboardInput {
         canvas.addEventListener('mousedown', this.mouseDown);
         canvas.addEventListener('mousemove', this.mouseMove);
         canvas.addEventListener('mouseup', this.mouseUp);
+        canvas.addEventListener('mouseleave', this.mouseUp);
     }
 
     beginDrawing(x: number, y: number) {
