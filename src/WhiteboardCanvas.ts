@@ -6,7 +6,10 @@ export default class WhiteboardCanvas {
         this.clear();
     }
 
-    lineSegment(x1: number, y1: number, x2: number, y2: number) {
+    lineSegment(x1: number, y1: number, x2: number, y2: number, color = 'red', width = 10) {
+        this.ctx.strokeStyle = color;
+        this.ctx.lineWidth = width;
+        
         this.ctx.beginPath();
         this.ctx.moveTo(x1, y1);
         this.ctx.lineTo(x2, y2);

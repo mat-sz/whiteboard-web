@@ -16,7 +16,9 @@ export default class WhiteboardWebSocket {
                 switch (obj.type) {
                     case 'lineSegment':
                         const segmentMessage = obj as WhiteboardMessageLineSegment;
-                        this.whiteboardCanvas.lineSegment(segmentMessage.x1, segmentMessage.y1, segmentMessage.x2, segmentMessage.y2);
+                        this.whiteboardCanvas.lineSegment(segmentMessage.x1, segmentMessage.y1, segmentMessage.x2, segmentMessage.y2,
+                            segmentMessage.color ? segmentMessage.color : 'red',
+                            segmentMessage.width ? segmentMessage.width : 10);
                         break;
                     case 'initialData':
                         const initialDataMessage = obj as WhiteboardMessageInitialData;
@@ -44,13 +46,15 @@ export default class WhiteboardWebSocket {
         this.sendMessage(clearMessage);
     }
 
-    lineSegment(x1: number, y1: number, x2: number, y2: number) {
+    lineSegment(x1: number, y1: number, x2: number, y2: number, color = 'red', width = 10) {
         const segmentMessage: WhiteboardMessageLineSegment = {
             type: 'lineSegment',
             x1: x1,
             y1: y1,
             x2: x2,
             y2: y2,
+            color: color,
+            width: width,
         };
 
         this.sendMessage(segmentMessage);
