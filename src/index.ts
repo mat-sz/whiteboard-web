@@ -2,11 +2,16 @@ import './App.scss';
 import Whiteboard from './Whiteboard';
 
 const canvas = document.getElementById('canvas') as HTMLCanvasElement;
-const loadingDiv = document.getElementById('loading');
+const statusBar = document.getElementById('status');
 
-let whiteboard = new Whiteboard(canvas, 'ws://' + location.hostname + ':5000/ws', () => {
-    loadingDiv.style.display = 'none';
-});
+let whiteboard = new Whiteboard(canvas, 'ws://' + location.hostname + ':5000/ws',
+    () => {
+        statusBar.style.display = 'none';
+    }, 
+    () => {
+        statusBar.style.display = 'block';
+    }
+);
 
 const clearButton = document.getElementById('clear');
 clearButton.addEventListener('click', () => {

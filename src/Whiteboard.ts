@@ -8,31 +8,28 @@ class Whiteboard {
     private whiteboardInput: WhiteboardInput = null;
 
     constructor(canvas: HTMLCanvasElement, url: string,
-        private onReady: () => void) {
+        private onConnect: () => void,
+        private onDisconnect: () => void) {
 
         this.whiteboardCanvas = new WhiteboardCanvas(canvas);
         this.whiteboardWebSocket = new WhiteboardWebSocket(url, this.whiteboardCanvas);
         this.whiteboardInput = new WhiteboardInput(this.whiteboardCanvas, this.whiteboardWebSocket);
 
-        this.whiteboardWebSocket.webSocket.addEventListener("open", () => {
-            this.connected();
+        this.whiteboardWebSocket.webSocket.addEventListener('open', () => {
+            this.onConnect();
         });
 
-        this.whiteboardWebSocket.webSocket.addEventListener("error", () => {
+        this.whiteboardWebSocket.webSocket.addEventListener('error', () => {
             //this.error();
         });
 
-        this.whiteboardWebSocket.webSocket.addEventListener("close", () => {
-            //this.disconnected();
+        this.whiteboardWebSocket.webSocket.addEventListener('close', () => {
+            this.onDisconnect();
         });
 
         if (this.whiteboardWebSocket.webSocket.readyState == WebSocket.OPEN) {
-            this.connected();
+            this.onConnect();
         }
-    }
-
-    connected() {
-        this.onReady();
     }
 
     clear() {
