@@ -8,12 +8,12 @@ let whiteboard = new Whiteboard(canvas, 'ws://localhost:5000/ws', () => {
     loadingDiv.style.display = 'none';
 });
 
-const clearButton = document.getElementById('button-clear');
+const clearButton = document.getElementById('clear');
 clearButton.addEventListener('click', () => {
     whiteboard.clear();
 });
 
-const colorButtons = document.getElementsByClassName('button-color');
+const colorButtons = document.getElementsByClassName('controls__color');
 for (let index in colorButtons) {
     const button = colorButtons[index];
     button.addEventListener('click', () => {

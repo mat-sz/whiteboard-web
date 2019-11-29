@@ -7,15 +7,17 @@
         <title>Whiteboard</title>
     </head>
     <body>
-        <div id="loading">Loading...</div>
-        <canvas id="canvas" width=800 height=800></canvas>
-        <div class="controls">
-            <button id="button-clear">Clear</button>
-            <button class="button-color" data-color="red" style="background-color: red;">Red</button>
-            <button class="button-color" data-color="green" style="background-color: green;">Green</button>
-            <button class="button-color" data-color="blue" style="background-color: blue;">Blue</button>
-            <button class="button-color" data-color="black" style="background-color: black;">Black</button>
-            <button class="button-color" data-color="white" style="background-color: white;">White</button>
+        <div class="wrapper">
+            <div id="loading">Loading...</div>
+            <div class="controls">
+                <button id="clear" class="controls__clear">Clear</button>
+                <button class="controls__color" data-color="red" style="background-color: red;">Red</button>
+                <button class="controls__color" data-color="green" style="background-color: green;">Green</button>
+                <button class="controls__color" data-color="blue" style="background-color: blue;">Blue</button>
+                <button class="controls__color" data-color="black" style="background-color: black;">Black</button>
+                <button class="controls__color" data-color="white" style="background-color: white;">White</button>
+            </div>
+            <canvas id="canvas" width=800 height=800></canvas>
         </div>
     </body>
 </html>

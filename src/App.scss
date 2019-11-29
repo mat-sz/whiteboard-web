@@ -1,18 +1,33 @@
 body {
-    background: #111111;
+    background: #333;
 }
 
 * {
     box-sizing: border-box;
 }
 
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+canvas {
+    box-shadow: 0 25px 25px -25px rgba(0,0,0,0.4);
+}
+
 button {
-    border: 2px solid white;
+    border: 5px solid #111;
     padding: 5px;
     border-radius: 2px;
-    background: #fff;
+    background: #111;
+    color: white;
+}
 
-    &.button-color {
+.controls {
+    padding: 5px;
+
+    &__color {
         color: transparent;
         width: 50px;
     }
