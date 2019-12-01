@@ -25,3 +25,8 @@ for (let index in colorButtons) {
         whiteboard.setColor(button.getAttribute('data-color'));
     });
 }
+
+document.addEventListener('gesturestart', (e) => {
+    // Disable zoom on mobile Safari.
+    e.preventDefault();
+});
