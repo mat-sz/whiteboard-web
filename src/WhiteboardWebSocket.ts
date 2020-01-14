@@ -1,41 +1,40 @@
 import WhiteboardCanvas from './WhiteboardCanvas';
+import { TypeSocket } from 'typesocket';
 import { WhiteboardMessage, WhiteboardMessageLineSegment, WhiteboardMessageInitialData } from './Types';
 
 export default class WhiteboardWebSocket {
-    public webSocket: WebSocket = null;
+    private typeSocket: TypeSocket<WhiteboardMessage> = null;
 
     constructor(url: string,
-        private whiteboardCanvas: WhiteboardCanvas) {
+        private whiteboardCanvas: WhiteboardCanvas,
+        onConnected: () => void,
+        onDisconnected: () => void) {
 
-        this.webSocket = new WebSocket(url);
+        this.typeSocket = new TypeSocket<WhiteboardMessage>(url);
 
-        this.webSocket.addEventListener('message', (e) => {
-            try {
-                const obj = JSON.parse(e.data) as WhiteboardMessage;
-                
-                switch (obj.type) {
-                    case 'lineSegment':
-                        const segmentMessage = obj as WhiteboardMessageLineSegment;
-                        this.whiteboardCanvas.lineSegment(segmentMessage.x1, segmentMessage.y1, segmentMessage.x2, segmentMessage.y2,
-                            segmentMessage.color ? segmentMessage.color : 'red',
-                            segmentMessage.width ? segmentMessage.width : 10);
-                        break;
-                    case 'initialData':
-                        const initialDataMessage = obj as WhiteboardMessageInitialData;
-                        this.whiteboardCanvas.initialize(initialDataMessage.dataURL, initialDataMessage.width, initialDataMessage.height);
-                        break;
-                    case 'clear':
-                        this.whiteboardCanvas.clear();
-                        break;
-                }
-            } catch (e) {
-                // Ignore the message since it probably wasn't meant for us anyway.
-            }
-        });
+        this.typeSocket.onConnected = onConnected;
+        this.typeSocket.onDisconnected = onDisconnected;
+
+        this.handleMessage = this.handleMessage.bind(this);
+        this.typeSocket.onMessage = this.handleMessage;
     }
-    
-    sendMessage(message: WhiteboardMessage) {
-        this.webSocket.send(JSON.stringify(message));
+
+    handleMessage(obj: WhiteboardMessage) {
+        switch (obj.type) {
+            case 'lineSegment':
+                const segmentMessage = obj as WhiteboardMessageLineSegment;
+                this.whiteboardCanvas.lineSegment(segmentMessage.x1, segmentMessage.y1, segmentMessage.x2, segmentMessage.y2,
+                    segmentMessage.color ? segmentMessage.color : 'red',
+                    segmentMessage.width ? segmentMessage.width : 10);
+                break;
+            case 'initialData':
+                const initialDataMessage = obj as WhiteboardMessageInitialData;
+                this.whiteboardCanvas.initialize(initialDataMessage.dataURL, initialDataMessage.width, initialDataMessage.height);
+                break;
+            case 'clear':
+                this.whiteboardCanvas.clear();
+                break;
+        }
     }
 
     clear() {
@@ -43,7 +42,7 @@ export default class WhiteboardWebSocket {
             type: 'clear',
         };
 
-        this.sendMessage(clearMessage);
+        this.typeSocket.send(clearMessage);
     }
 
     lineSegment(x1: number, y1: number, x2: number, y2: number, color = 'red', width = 10) {
@@ -57,6 +56,6 @@ export default class WhiteboardWebSocket {
             width: width,
         };
 
-        this.sendMessage(segmentMessage);
+        this.typeSocket.send(segmentMessage);
     }
 }
