@@ -12,11 +12,12 @@ export default class WhiteboardWebSocket {
 
         this.typeSocket = new TypeSocket<WhiteboardMessage>(url);
 
-        this.typeSocket.onConnected = onConnected;
-        this.typeSocket.onDisconnected = onDisconnected;
+        this.typeSocket.on('connected', onConnected);
+        this.typeSocket.on('disconnected', onDisconnected);
 
         this.handleMessage = this.handleMessage.bind(this);
-        this.typeSocket.onMessage = this.handleMessage;
+        this.typeSocket.on('message', this.handleMessage);
+        this.typeSocket.connect();
     }
 
     handleMessage(obj: WhiteboardMessage) {
