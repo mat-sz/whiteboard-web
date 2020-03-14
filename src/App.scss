@@ -46,8 +46,29 @@ button {
     padding: 5px;
     padding-top: 20px;
 
+    button {
+        height: 40px;
+        margin: 2px;
+    }
+
+    & > div {
+        display: flex;
+    }
+
     &__color {
         color: transparent;
         width: 50px;
+    }
+
+    &__width {
+        width: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+        div {
+            border-radius: 100%;
+            background: white;
+        }
     }
 }

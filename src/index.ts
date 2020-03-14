@@ -19,10 +19,16 @@ clearButton.addEventListener('click', () => {
 });
 
 const colorButtons = document.getElementsByClassName('controls__color');
-for (let index in colorButtons) {
-    const button = colorButtons[index];
+for (let button of colorButtons) {
     button.addEventListener('click', () => {
         whiteboard.setColor(button.getAttribute('data-color'));
+    });
+}
+
+const widthButtons = document.getElementsByClassName('controls__width');
+for (let button of widthButtons) {
+    button.addEventListener('click', () => {
+        whiteboard.setWidth(parseInt(button.getAttribute('data-width')));
     });
 }
 
