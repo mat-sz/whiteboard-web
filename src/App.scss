@@ -42,7 +42,8 @@ button {
     color: white;
 
     &.active {
-        background: #444;
+        border: 5px solid #222;
+        background: #222;
     }
 }
 
