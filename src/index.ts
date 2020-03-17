@@ -22,6 +22,11 @@ const colorButtons = document.getElementsByClassName('controls__color');
 for (let button of colorButtons) {
     button.addEventListener('click', () => {
         whiteboard.setColor(button.getAttribute('data-color'));
+        for (let button of colorButtons) {
+            button.classList.remove('active');
+        }
+
+        button.classList.add('active');
     });
 }
 
@@ -29,6 +34,11 @@ const widthButtons = document.getElementsByClassName('controls__width');
 for (let button of widthButtons) {
     button.addEventListener('click', () => {
         whiteboard.setWidth(parseInt(button.getAttribute('data-width')));
+        for (let button of widthButtons) {
+            button.classList.remove('active');
+        }
+
+        button.classList.add('active');
     });
 }
 

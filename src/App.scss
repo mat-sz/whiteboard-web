@@ -40,6 +40,10 @@ button {
     border-radius: 2px;
     background: #111;
     color: white;
+
+    &.active {
+        background: #444;
+    }
 }
 
 .controls {
