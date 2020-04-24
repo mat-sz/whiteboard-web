@@ -4,45 +4,47 @@ import Whiteboard from './Whiteboard';
 const canvas = document.getElementById('canvas') as HTMLCanvasElement;
 const statusBar = document.getElementById('status');
 
-let whiteboard = new Whiteboard(canvas, 'ws://' + location.hostname + ':5000/ws',
-    () => {
-        statusBar.style.display = 'none';
-    }, 
-    () => {
-        statusBar.style.display = 'block';
-    }
+let whiteboard = new Whiteboard(
+  canvas,
+  'ws://' + location.hostname + ':5000/ws',
+  () => {
+    statusBar.style.display = 'none';
+  },
+  () => {
+    statusBar.style.display = 'block';
+  }
 );
 
 const clearButton = document.getElementById('clear');
 clearButton.addEventListener('click', () => {
-    whiteboard.clear();
+  whiteboard.clear();
 });
 
 const colorButtons = document.getElementsByClassName('controls__color');
 for (let button of colorButtons) {
-    button.addEventListener('click', () => {
-        whiteboard.setColor(button.getAttribute('data-color'));
-        for (let button of colorButtons) {
-            button.classList.remove('active');
-        }
+  button.addEventListener('click', () => {
+    whiteboard.setColor(button.getAttribute('data-color'));
+    for (let button of colorButtons) {
+      button.classList.remove('active');
+    }
 
-        button.classList.add('active');
-    });
+    button.classList.add('active');
+  });
 }
 
 const widthButtons = document.getElementsByClassName('controls__width');
 for (let button of widthButtons) {
-    button.addEventListener('click', () => {
-        whiteboard.setWidth(parseInt(button.getAttribute('data-width')));
-        for (let button of widthButtons) {
-            button.classList.remove('active');
-        }
+  button.addEventListener('click', () => {
+    whiteboard.setWidth(parseInt(button.getAttribute('data-width')));
+    for (let button of widthButtons) {
+      button.classList.remove('active');
+    }
 
-        button.classList.add('active');
-    });
+    button.classList.add('active');
+  });
 }
 
-document.addEventListener('gesturestart', (e) => {
-    // Disable zoom on mobile Safari.
-    e.preventDefault();
+document.addEventListener('gesturestart', e => {
+  // Disable zoom on mobile Safari.
+  e.preventDefault();
 });
